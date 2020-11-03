@@ -51,7 +51,7 @@ while True:
     print(drkcol("What I can do for you :\n\n"))
 
     menulist = []
-    menulist.append(Menuitem("doreport","do html report (see json file)",0,jsonfilefromarg,True,False))        
+    menulist.append(Menuitem("doreport","do html report (see json file)",0,jsonfilefromarg,False,False))        
     menulist.append(Menuitem("test", "do test",0,jsonfilefromarg,False,False))     
 
     for idx,menuitem in enumerate(menulist): 

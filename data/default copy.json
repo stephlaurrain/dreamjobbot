@@ -12,8 +12,7 @@
     "useragent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36",
     "places" : 
       [
-        {	"code":567463,"adzunacode":119422,"insee":21231,"name":"Dijon","distance":50 }
-        
+         { "code":567463, "adzuna_code":119422, "insee":21231, "name":"Dijon" , "distance":50}
       ],
     "sites":
       [
@@ -38,7 +37,7 @@
         {	"notthem":"alteca" },
         {	"notthem":"gfi" }
       ]      
-}
+    }
     
 
 

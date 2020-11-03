@@ -125,7 +125,7 @@ class Bot:
                         report = self.inithtmlreport()
                         places = self.jsprms.prms["sites"]
                         for place in places:
-                                print(str(place))
+                                print(str(place["name"]))
 
                 except Exception as e:
                        self.log.errlg(e) 
@@ -148,13 +148,11 @@ class Bot:
                         self.log = mylog.Log()
                         self.log.init(param)
                         self.trace(inspect.stack()[0])     
-                        jsonFn ="{0}{1}data{1}{2}.json".format(self.rootApp,os.path.sep,param)
+                        jsonFn ="{0}{1}data{1}{2}.json".format(self.rootApp,os.path.sep,param)                        
                         self.jsprms = jsonprms.Prms(jsonFn)                                              
                         self.chromedriverbinpath ="{0}{1}assets{1}chromedriver{1}chromedriver".format(self.rootApp,os.path.sep)
                         self.test = self.jsprms.prms["test"]
                         self.log.lg("=let's crawl=")
-                                                
-
                         self.driver = self.init()                        
                         print(command)                                                       
                         if (command=="doreport"):                             
