@@ -1,0 +1,34 @@
+.linksuiv {
+    font-size:45px;
+    font-weight:bold;
+    margin-top:25px;
+    margin-left:50%;
+}
+
+.main {
+    background-color: #F3F3F3;
+    font-family:pompiere;
+}
+
+h1 {
+    font-family:vidaloka;
+} 
+
+h2 {
+    font-family:vidaloka;
+} 
+
+h3 {
+   font-family:pompiere;
+}
+
+/* polices */
+@font-face {
+    font-family: pompiere;  
+    src: url(../fonts/Pompiere-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: vidaloka;  
+    src: url(../fonts/Vidaloka-Regular.otf) format('truetype');
+}
