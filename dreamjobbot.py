@@ -12,6 +12,7 @@ import utils.mylog as mylog
 import utils.strutils as strutils
 import utils.jsonprms as jsonprms
 from engines.poleemploiengine import Poleemploiengine
+from engines.htmlfactory import Htmlfactory
 import inspect
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -26,6 +27,7 @@ class Bot:
         def __init__(self):                
                 self.visitedthissession = list()
                 self.dumbthissession = list()
+                self.htmlfactory = Htmlfactory(self)
 
         def trace(self,stck):
                 #print ("{0} ({1}-{2})".format(stck.function, stck.filename, stck.lineno))
@@ -95,35 +97,13 @@ class Bot:
                 res = path.exists(stopfile)
                 if (res):os.remove(stopfile)
 
-        def inithtmlreport(self):  
-                self.trace(inspect.stack()[0])
-                try:  
-                        head="<html>"
-                        head+="\n<head>"
-                        head+="<link href={0}bootstrap.min.css{0} rel={0}stylesheet{0}>".format(chr(34))
-                        head+="<link href={0}dreamjobbot.css{0}rel={0}stylesheet{0}>".format(chr(34))
-                        head+="\n</head>"
-                        head+="\n<body class={0}main{0}>".format(chr(34))
-                        return head
-                except Exception as e:
-                       self.log.errlg(e) 
-                       raise
 
-        def finalizehtmlreport(self):  
-                self.trace(inspect.stack()[0])
-                try:  
-                        end ="</body>"
-                        end+="\n</html>"
-                        return end
-                except Exception as e:
-                       self.log.errlg(e) 
-                       raise
         
         def doreport(self):  
                 self.trace(inspect.stack()[0])
                 try:  
                         cptglb=0
-                        report = self.inithtmlreport()
+                        report = self.htmlfactory.initreport()
                         places = self.jsprms.prms["places"]
                         keywords = self.jsprms.prms["keywords"]
                         sites = self.jsprms.prms["sites"]
@@ -133,11 +113,13 @@ class Bot:
                                         for site in sites:
                                                 name=site["name"]
                                                 print(site["name"])
+                                                report+=self.htmlfactory.gettitle(site["name"])
                                                 if name=="apec":
                                                         if site["ison"]:
                                                                 pass
+                                                                
                                                 if name=="poleemploi":
-                                                        if site["ison"]:
+                                                        if site["ison"]:                                                                
                                                                 poleemploiengine = Poleemploiengine(self)
                                                                 report+=poleemploiengine.getreport()
                                                 if name=="indeed":
@@ -149,7 +131,7 @@ class Bot:
                                                 if name=="neuvoo":
                                                         if site["ison"]:
                                                                 pass
-                        report+=self.finalizehtmlreport()
+                        report+=self.htmlfactory.finalizereport()
                         reportfn = "{0}{1}data{1}reports{1}report.html".format(self.rootApp,os.path.sep)  
                         if path.exists(reportfn):os.remove(reportfn)
                         with open(reportfn,"w") as reportfile:
