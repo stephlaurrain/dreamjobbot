@@ -45,7 +45,7 @@ clear = lambda : os.system('clear')
 clear()
 while True:
     
-    print(drkcol("\n\nHi Neo, I'm the DreamJobBot"))
+    print(drkcol("\n\nHi Neo, I'm the DreamJobBot V1.1349"))
     print(drkcol("I'm ready to farm jobs"))
     print(drkcol("Your wish is my order\n\n"))
     print(drkcol("What I can do for you :\n\n"))

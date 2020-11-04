@@ -11,6 +11,7 @@ import logging
 import utils.mylog as mylog
 import utils.strutils as strutils
 import utils.jsonprms as jsonprms
+from engines.poleemploiengine import Poleemploiengine
 import inspect
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -123,9 +124,36 @@ class Bot:
                 try:  
                         cptglb=0
                         report = self.inithtmlreport()
-                        places = self.jsprms.prms["sites"]
-                        for place in places:
-                                print(str(place["name"]))
+                        places = self.jsprms.prms["places"]
+                        keywords = self.jsprms.prms["keywords"]
+                        sites = self.jsprms.prms["sites"]
+                        for place in places:                                
+                                print(place["name"])
+                                for kw in keywords:
+                                        for site in sites:
+                                                name=site["name"]
+                                                print(site["name"])
+                                                if name=="apec":
+                                                        if site["ison"]:
+                                                                pass
+                                                if name=="poleemploi":
+                                                        if site["ison"]:
+                                                                poleemploiengine = Poleemploiengine(self)
+                                                                report+=poleemploiengine.getreport()
+                                                if name=="indeed":
+                                                        if site["ison"]:
+                                                                pass
+                                                if name=="adzuna":
+                                                        if site["ison"]:
+                                                                pass
+                                                if name=="neuvoo":
+                                                        if site["ison"]:
+                                                                pass
+                        report+=self.finalizehtmlreport()
+                        reportfn = "{0}{1}data{1}reports{1}report.html".format(self.rootApp,os.path.sep)  
+                        if path.exists(reportfn):os.remove(reportfn)
+                        with open(reportfn,"w") as reportfile:
+                                reportfile.write(report)
 
                 except Exception as e:
                        self.log.errlg(e) 
@@ -152,7 +180,7 @@ class Bot:
                         self.jsprms = jsonprms.Prms(jsonFn)                                              
                         self.chromedriverbinpath ="{0}{1}assets{1}chromedriver{1}chromedriver".format(self.rootApp,os.path.sep)
                         self.test = self.jsprms.prms["test"]
-                        self.log.lg("=let's crawl=")
+                        self.log.lg("=dreamjobbot V1.1349, let's crawl=")
                         self.driver = self.init()                        
                         print(command)                                                       
                         if (command=="doreport"):                             
