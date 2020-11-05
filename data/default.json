@@ -17,26 +17,27 @@
       ],
     "sites":
       [
-        {	"name":"indeed","ison":true,"pages":5, "ads":4},
-        {	"name":"adzuna","ison":true,"pages":5, "ads":20},
-        {	"name":"neuvoo","ison":true,"pages":5, "ads":20},
-        {	"name":"apec","ison":true,"pages":1, "ads":1  },
-        {	"name":"poleemploi","ison":true,"pages":1, "ads":3}
+        {	"name":"poleemploi","url":"https://candidat.pole-emploi.fr/offres/recherche","ison":true,"pages":1, "ads":30},
+        {	"name":"indeed","url":"https://www.indeed.fr","ison":true,"pages":5, "ads":4},
+        {	"name":"adzuna","url":"https://www.adzuna.fr","ison":true,"pages":5, "ads":20},
+        {	"name":"neuvoo","url":"https://neuvoo.fr", "ison":true,"pages":5, "ads":20},
+        {	"name":"apec","url":"http://apec.fr","ison":true,"pages":1, "ads":1  }
+        
         
       ],
     "keywords":
       [                
         {	"words":
           [
-            {"word":"developpeur"},
-            {"word":"informatique"}  
+            "developpeur",
+            "informatique"  
           ]
         }
       ],
     "exclude":
       [
-        {	"notthem":"alteca" },
-        {	"notthem":"gfi" }
+        "alteca",
+        "notthem"
       ]      
 }
     

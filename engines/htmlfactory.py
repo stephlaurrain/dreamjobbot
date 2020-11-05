@@ -36,12 +36,14 @@ class Htmlfactory(metaclass=Singleton):
                        self.mainclass.log.errlg(e) 
                        raise
 
-        def gettitle(self,name):  
+        def gettitle(self,title, level):  
                 self.mainclass.trace(inspect.stack()[0])
                 try:  
-                        end ="</body>"
-                        end+="\n</html>"
-                        return end
+                        res="<h{0}>".format(level)
+                        res+=title
+                        res+="</h{0}>".format(level)
+                        return res
+                
                 except Exception as e:
                        self.mainclass.log.errlg(e) 
                        raise

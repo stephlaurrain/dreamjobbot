@@ -97,7 +97,11 @@ class Bot:
                 res = path.exists(stopfile)
                 if (res):os.remove(stopfile)
 
-
+        def wordstostr(self, words):  
+                res=""
+                for wrd in words:
+                        res += "{0}+".format(wrd)
+                return res[:-1]
         
         def doreport(self):  
                 self.trace(inspect.stack()[0])
@@ -110,10 +114,12 @@ class Bot:
                         for place in places:                                
                                 print(place["name"])
                                 for kw in keywords:
+                                        words=kw["words"]
+                                        wordstostr = self.wordstostr(words)
                                         for site in sites:
                                                 name=site["name"]
                                                 print(site["name"])
-                                                report+=self.htmlfactory.gettitle(site["name"])
+                                                report+=self.htmlfactory.gettitle(site["name"],1)
                                                 if name=="apec":
                                                         if site["ison"]:
                                                                 pass
@@ -121,7 +127,7 @@ class Bot:
                                                 if name=="poleemploi":
                                                         if site["ison"]:                                                                
                                                                 poleemploiengine = Poleemploiengine(self)
-                                                                report+=poleemploiengine.getreport()
+                                                                report+=poleemploiengine.getreport(site, place, wordstostr)
                                                 if name=="indeed":
                                                         if site["ison"]:
                                                                 pass
@@ -168,8 +174,9 @@ class Bot:
                         if (command=="doreport"):                             
                                 
                                 self.doreport()
-                                
-                        
+                                self.waithuman(1500)
+                                self.driver.close()
+                                self.driver.quit()
                          
                        
 
