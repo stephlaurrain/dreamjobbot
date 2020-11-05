@@ -1,8 +1,8 @@
 {
     "test":false,
     "defaultwait":20,
-    "offsetwait":10,
-    "wait":10,
+    "offsetwait":5,
+    "wait":5,
     "implicitlywait":2,
     "log": true,
     "debug": true,
