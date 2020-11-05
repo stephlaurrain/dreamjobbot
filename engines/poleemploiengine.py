@@ -41,16 +41,22 @@ class Poleemploiengine:
                 try:
                         report =""
                         mainlist = self.mainclass.driver.find_element_by_class_name("result")
+                        orgurl = mainlist.find_element_by_css_selector("a").get_attribute("href")
+                        print(orgurl)
+                        #
+                        report+=self.mainclass.htmlfactory.geturltolink(orgurl)
                         mainlist.click()
                         #titleel=self.mainclass.driver.find_element_by_css_selector("#detailOffreVolet > h2")
                         #report+=titleel.get_attribute("innerhtml")
+                        
+                        wait = WebDriverWait(self.mainclass.driver, 15)
+                        wait.until(EC.invisibility_of_element_located((By.ID, "loader-container")))
                         adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
+                        #input ("press key : ")
                         report+=adel.get_attribute("innerHTML")
                         print(report)
-                        #for eloflist in mainlist:
-                        #        eloflist.click()
-
-                        #page_0-19 > li:nth-child(1)
+                        btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
+                        btnclose.click()
                         return report
                 except Exception as e:
                         self.mainclass.log.errlg(e)
