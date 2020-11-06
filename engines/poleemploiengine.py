@@ -37,23 +37,31 @@ class Poleemploiengine:
                         self.mainclass.log.errlg(e)
                         raise
 
-        def getads(self):
+        def getads(self,exclude):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:
                         
                         mainlist = self.mainclass.driver.find_elements_by_class_name("result")
                         for res in mainlist:
-                                orgurl = res.find_element_by_css_selector("a").get_attribute("href")
+                                orgurlel = res.find_element_by_css_selector("a")
+                                orgurl = orgurlel.get_attribute("href")
                                 print(orgurl)
                                 #
-                                self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)
-                                res.click()
+                                
+                                #res.click()
+                                orgurlel.click()
                                 self.mainclass.waithuman()
                                 wait = WebDriverWait(self.mainclass.driver, 15)
                                 wait.until(EC.invisibility_of_element_located((By.ID, "loader-container")))
                                 adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
                                 #input ("press key : ")
-                                self.report+=adel.get_attribute("innerHTML")                                
+                                adcontain= adel.get_attribute("innerHTML")
+                                doit=True
+                                for ex in exclude:
+                                        doit = not (ex in adcontain)                                                
+                                if doit:
+                                        self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)                                
+                                        self.report+=adcontain
                                 btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
                                 btnclose.click()
                                 self.mainclass.waithuman()
@@ -61,11 +69,11 @@ class Poleemploiengine:
                         self.mainclass.log.errlg(e)
                         raise
 
-        def getreport(self, site, place, words):
+        def getreport(self, site, place, exclude, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
                     self.dosearch(site, place, words)  
-                    self.getads()              
+                    self.getads(exclude)              
                     return self.report                    
                 except Exception as e:
                         self.mainclass.log.errlg(e)

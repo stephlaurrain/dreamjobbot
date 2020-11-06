@@ -66,6 +66,7 @@ class Bot:
                         options = webdriver.ChromeOptions()       
                         if (self.jsprms.prms["headless"]):                                
                                 options.add_argument("--headless")
+                                options.add_argument("--window-size=1920,1080") # corrige problème not clickable
                         #pi / docker                
                         if (self.jsprms.prms["raspberry"]):
                                 options.add_argument("--no-sandbox")
@@ -97,11 +98,7 @@ class Bot:
                 res = path.exists(stopfile)
                 if (res):os.remove(stopfile)
 
-        def wordstostr(self, words):  
-                res=""
-                for wrd in words:
-                        res += "{0}+".format(wrd)
-                return res[:-1]
+        
         
         def doreport(self):  
                 self.trace(inspect.stack()[0])
@@ -111,11 +108,13 @@ class Bot:
                         places = self.jsprms.prms["places"]
                         keywords = self.jsprms.prms["keywords"]
                         sites = self.jsprms.prms["sites"]
+                        exclude = self.jsprms.prms["exclude"]
                         for place in places:                                
                                 print(place["name"])
                                 for kw in keywords:
                                         words=kw["words"]
-                                        wordstostr = self.wordstostr(words)
+                                        wordstostr = '+'.join(words)
+                                        report+=self.htmlfactory.gettitle(wordstostr,2)
                                         for site in sites:
                                                 name=site["name"]
                                                 print(site["name"])
@@ -126,8 +125,8 @@ class Bot:
                                                                 
                                                 if name=="poleemploi":
                                                         if site["ison"]:                                                                
-                                                                poleemploiengine = Poleemploiengine(self)
-                                                                report+=poleemploiengine.getreport(site, place, wordstostr)
+                                                                poleemploiengine = Poleemploiengine(self)                                                                
+                                                                report+=poleemploiengine.getreport(site, place, exclude, wordstostr)
                                                 if name=="indeed":
                                                         if site["ison"]:
                                                                 pass
@@ -174,7 +173,7 @@ class Bot:
                         if (command=="doreport"):                             
                                 
                                 self.doreport()
-                                self.waithuman(1500)
+                                #self.waithuman(1500)
                                 self.driver.close()
                                 self.driver.quit()
                          

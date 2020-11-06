@@ -7,28 +7,32 @@
 
 .main {
     background-color: #F3F3F3;
-    font-family:pompiere;
+    font-family:larseit;
+    font-size:16px;
+    margin-left: 35px;
 }
 
 h1 {
     font-family:vidaloka;
+    font-size: 20px;
 } 
 
 h2 {
     font-family:vidaloka;
-} 
+    font-size: 14px;
+}
 
 h3 {
-   font-family:pompiere;
+   font-family:larseit;
 }
 
 /* polices */
 @font-face {
-    font-family: pompiere;  
-    src: url(../fonts/Pompiere-Regular.ttf) format('truetype');
+    font-family: larseit;  
+    src: url(./fonts/LarsseitLight.otf) format('truetype');
 }
 
 @font-face {
     font-family: vidaloka;  
-    src: url(../fonts/Vidaloka-Regular.otf) format('truetype');
+    src: url(./fonts/Vidaloka-Regular.otf) format('truetype');
 }
