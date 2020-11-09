@@ -17,7 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 
 
-class Poleemploiengine:
+class Linkedinengine:
       
         def __init__(self, mainclass):                
                 self.visitedthissession = list()
@@ -28,12 +28,13 @@ class Poleemploiengine:
         def dosearch(self, site, distance, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        rnge="0-{0}".format(site["ads"]-1)
-                        prms="lieux={0}&motsCles={1}&offresPartenaires=true&range={2}&rayon={3}&tri=1".format(location["code"], words,rnge,distance )
+                        prms="keywords={0}&location={1}&geoId=&redirect=false&position=1&pageNum=0&f_TP=1,2".format(words, location["geosite"])
                         fullurl = "{0}?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)
-                        
-                except Exception as e:
+                        #https://www.linkedin.com/jobs/search?keywords=Informatique&location=Dijon%2C%20Bourgogne-Franche-Comt%C3%A9%2C%20France&geoId=&redirect=false&position=1&pageNum=0                    
+                        # f_TP=1%2C2 = la semaine dernière
+                        # tri par date sortBy=DD
+                   except Exception as e:
                         self.mainclass.log.errlg(e)
                         raise
 
@@ -74,12 +75,11 @@ class Poleemploiengine:
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
                     self.dosearch(site, distance, location, words)  
-                    #self.getads(exclude)              
+                    self.getads(exclude)              
                     return self.report                    
                 except Exception as e:
                         self.mainclass.log.errlg(e)
                         raise
-       
 
 
               

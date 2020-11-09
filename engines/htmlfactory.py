@@ -51,7 +51,7 @@ class Htmlfactory(metaclass=Singleton):
         def geturltolink(self,url):
                 self.mainclass.trace(inspect.stack()[0])
                 try:  
-                        res="<div class={0}row{0}></div>".format(chr(34))
+                        res="<div class={0}row jobad{0} ></div>".format(chr(34))
                         res+="<div class={0}col-12 bd-content{0}>".format(chr(34))
                         res+="<span class={0}text-primary{0}>URL : </span><a target={0}blank{0} href={0}{1}{0}>{1}</a>".format(chr(34),url)
                         res+="</div>"

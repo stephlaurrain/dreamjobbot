@@ -12,6 +12,7 @@ import utils.mylog as mylog
 import utils.strutils as strutils
 import utils.jsonprms as jsonprms
 from engines.poleemploiengine import Poleemploiengine
+from engines.linkedinengine import Linkedinengine
 from engines.htmlfactory import Htmlfactory
 import inspect
 from selenium import webdriver
@@ -98,12 +99,25 @@ class Bot:
                 res = path.exists(stopfile)
                 if (res):os.remove(stopfile)
 
-        
+        def getlocationfromplace (self,sitename, place):        
+                self.trace(inspect.stack()[0])
+                try:                                      
+                      
+                        for location in place["location"]:
+                                print(location["site"])
+                                if location["site"]==sitename:
+                                        print("###{0}###".format(location))
+                                        return location
+                
+         
+                except Exception as e:
+                        self.log.errlg(e) 
+                        raise
         
         def doreport(self):  
                 self.trace(inspect.stack()[0])
                 try:  
-                        cptglb=0
+                        
                         report = self.htmlfactory.initreport()
                         places = self.jsprms.prms["places"]
                         keywords = self.jsprms.prms["keywords"]
@@ -119,14 +133,21 @@ class Bot:
                                                 name=site["name"]
                                                 print(site["name"])
                                                 report+=self.htmlfactory.gettitle(site["name"],1)
+                                                location =self.getlocationfromplace(name,place)
+                                                distance=place["distance"]
+                                                if name=="poleemploi":
+                                                        if site["ison"]:                                                                
+                                                                poleemploiengine = Poleemploiengine(self)                                                                                  
+                                                                report+=poleemploiengine.getreport(site, distance, location, exclude, wordstostr)
+                                                if name=="linkedin":
+                                                        if site["ison"]:
+                                                                linkedinengine = Linkedinengine(self)  
+                                                                report+=linkedinengine.getreport(site, distance, location, exclude, wordstostr)
+                                                                
                                                 if name=="apec":
                                                         if site["ison"]:
                                                                 pass
                                                                 
-                                                if name=="poleemploi":
-                                                        if site["ison"]:                                                                
-                                                                poleemploiengine = Poleemploiengine(self)                                                                
-                                                                report+=poleemploiengine.getreport(site, place, exclude, wordstostr)
                                                 if name=="indeed":
                                                         if site["ison"]:
                                                                 pass
@@ -137,7 +158,9 @@ class Bot:
                                                         if site["ison"]:
                                                                 pass
                         report+=self.htmlfactory.finalizereport()
-                        reportfn = "{0}{1}data{1}reports{1}report.html".format(self.rootApp,os.path.sep)  
+                        today = datetime.now()
+                        dnow = today.strftime(r"%Y%d%m") 
+                        reportfn = "{0}{1}data{1}reports{1}{2}report.html".format(self.rootApp,os.path.sep,dnow)  
                         if path.exists(reportfn):os.remove(reportfn)
                         with open(reportfn,"w") as reportfile:
                                 reportfile.write(report)
@@ -167,7 +190,7 @@ class Bot:
                         self.jsprms = jsonprms.Prms(jsonFn)                                              
                         self.chromedriverbinpath ="{0}{1}assets{1}chromedriver{1}chromedriver".format(self.rootApp,os.path.sep)
                         self.test = self.jsprms.prms["test"]
-                        self.log.lg("=dreamjobbot V1.1349, let's crawl=")
+                        self.log.lg("=dreamjobbot V1.1346, let's crawl=")
                         self.driver = self.init()                        
                         print(command)                                                       
                         if (command=="doreport"):                             

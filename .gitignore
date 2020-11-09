@@ -5,6 +5,7 @@ __pycache__/
 
 botorg.py
 org.json
+default.json
 
 # C extensions
 *.so
