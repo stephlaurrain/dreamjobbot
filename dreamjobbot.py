@@ -146,7 +146,7 @@ class Bot:
                                                 if name=="linkedin":
                                                         if site["ison"]:
                                                                 linkedinengine = Linkedinengine(self)  
-                                                                report+=linkedinengine.getreport(site, distance, location, exclude, wordstostr)
+                                                                report+=linkedinengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)
                                                                 
                                                 if name=="apec":
                                                         if site["ison"]:

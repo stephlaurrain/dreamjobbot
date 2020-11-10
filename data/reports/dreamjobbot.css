@@ -30,7 +30,7 @@
 
 h1 {
     font-family:vidaloka;
-   
+    font-size:10rem !important;
 } 
 
 h2 {
@@ -41,6 +41,18 @@ h2 {
 h3 {
    font-family:larseit;
 }
+
+.face-pile, .see-who-was-hired, .topcard__logo-container, .details-pane__loader, .ellipsis-menu {
+    visibility: hidden;
+    display: none;
+}
+
+.show-more-less-html__button show-more-less-html__button--more, .show-more-less-html__button show-more-less-html__button--less {
+    visibility: hidden;
+    display: none;
+}
+
+
 
 /* polices */
 @font-face {

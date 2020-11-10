@@ -60,7 +60,7 @@ class Htmlfactory(metaclass=Singleton):
                        self.mainclass.log.errlg(e) 
                        raise
         
-        def getsitefrom(self,mess):  
+        def getsite(self,mess):  
                 self.mainclass.trace(inspect.stack()[0])
                 try:  
                         res="<div><span class={0}sitefrom{0}>".format(chr(34))
