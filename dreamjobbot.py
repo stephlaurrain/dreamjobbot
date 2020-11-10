@@ -9,8 +9,8 @@ from time import sleep
 import json
 import logging
 import utils.mylog as mylog
-import utils.strutils as strutils
 import utils.jsonprms as jsonprms
+from utils.strutils import Strutils
 from engines.poleemploiengine import Poleemploiengine
 from engines.linkedinengine import Linkedinengine
 from engines.htmlfactory import Htmlfactory
@@ -29,6 +29,7 @@ class Bot:
                 self.visitedthissession = list()
                 self.dumbthissession = list()
                 self.htmlfactory = Htmlfactory(self)
+                self.strutils = Strutils()
 
         def trace(self,stck):
                 #print ("{0} ({1}-{2})".format(stck.function, stck.filename, stck.lineno))
@@ -73,8 +74,8 @@ class Bot:
                                 options.add_argument("--no-sandbox")
                                 options.add_argument("--disable-dev-shm-usage")
                                 options.add_argument("--disable-gpu")
-                                prefs = {"profile.managed_default_content_settings.images": 2}
-                                options.add_experimental_option("prefs", prefs)
+                        prefs = {"profile.managed_default_content_settings.images": 2}
+                        options.add_experimental_option("prefs", prefs)
                         options.add_argument("user-agent={0}".format(self.jsprms.prms["useragent"]))            
                         options.add_argument("--start-maximized")
                         
@@ -114,7 +115,7 @@ class Bot:
                         self.log.errlg(e) 
                         raise
         
-        def doreport(self):  
+        def doreport(self, reportname):  
                 self.trace(inspect.stack()[0])
                 try:  
                         
@@ -122,7 +123,10 @@ class Bot:
                         places = self.jsprms.prms["places"]
                         keywords = self.jsprms.prms["keywords"]
                         sites = self.jsprms.prms["sites"]
+                        doinclude = self.jsprms.prms["doinclude"]
                         exclude = self.jsprms.prms["exclude"]
+                        include = self.jsprms.prms["include"]
+                        
                         for place in places:                                
                                 print(place["name"])
                                 for kw in keywords:
@@ -138,7 +142,7 @@ class Bot:
                                                 if name=="poleemploi":
                                                         if site["ison"]:                                                                
                                                                 poleemploiengine = Poleemploiengine(self)                                                                                  
-                                                                report+=poleemploiengine.getreport(site, distance, location, exclude, wordstostr)
+                                                                report+=poleemploiengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)
                                                 if name=="linkedin":
                                                         if site["ison"]:
                                                                 linkedinengine = Linkedinengine(self)  
@@ -160,7 +164,7 @@ class Bot:
                         report+=self.htmlfactory.finalizereport()
                         today = datetime.now()
                         dnow = today.strftime(r"%Y%d%m") 
-                        reportfn = "{0}{1}data{1}reports{1}{2}report.html".format(self.rootApp,os.path.sep,dnow)  
+                        reportfn = "{0}{1}data{1}reports{1}{2}{3}.html".format(self.rootApp,os.path.sep,dnow,reportname)  
                         if path.exists(reportfn):os.remove(reportfn)
                         with open(reportfn,"w") as reportfile:
                                 reportfile.write(report)
@@ -195,8 +199,9 @@ class Bot:
                         print(command)                                                       
                         if (command=="doreport"):                             
                                 
-                                self.doreport()
+                                self.doreport(param)
                                 #self.waithuman(1500)
+                                input("enter key")
                                 self.driver.close()
                                 self.driver.quit()
                          

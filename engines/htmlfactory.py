@@ -48,6 +48,30 @@ class Htmlfactory(metaclass=Singleton):
                        self.mainclass.log.errlg(e) 
                        raise
         
+        def getfound(self,mess):  
+                self.mainclass.trace(inspect.stack()[0])
+                try:  
+                        res="<div><span class={0}foundkw{0}>".format(chr(34))
+                        res+=mess
+                        res+="</span></div>"
+                        return res
+                
+                except Exception as e:
+                       self.mainclass.log.errlg(e) 
+                       raise
+        
+        def getsitefrom(self,mess):  
+                self.mainclass.trace(inspect.stack()[0])
+                try:  
+                        res="<div><span class={0}sitefrom{0}>".format(chr(34))
+                        res+=mess
+                        res+="</span></div>"
+                        return res
+                
+                except Exception as e:
+                       self.mainclass.log.errlg(e) 
+                       raise
+
         def geturltolink(self,url):
                 self.mainclass.trace(inspect.stack()[0])
                 try:  
