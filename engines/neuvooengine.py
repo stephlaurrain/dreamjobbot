@@ -17,7 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 
 
-class Linkedinengine:
+class Neuvooengine:
       
         def __init__(self, mainclass):                
                 self.visitedthissession = list()
@@ -28,12 +28,9 @@ class Linkedinengine:
         def dosearch(self, site, distance, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        prms="keywords={0}&location={1}&geoId=&redirect=false&position=1&pageNum=0&f_TP=1,2&distance={2}".format(words, location["geosite"], distance)
-                        #attention linkedin : 80km = distance 50, 120km=75 (osef pour le moment)
-                        fullurl = "{0}?{1}".format(site["url"],prms)
+                        prms="k={0}&l={1}&p=1&date=7d&field=&company=&source_type=&radius={2}&from=&test=&iam=&is_category=no".format(words, location["geosite"], distance)                                                
+                        fullurl = "{0}/?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)                        
-                        # f_TP=1%2C2 = la semaine dernière
-                        # tri par date sortBy=DD
                 except Exception as e:
                         self.mainclass.log.errlg(e)
                         raise
@@ -43,17 +40,11 @@ class Linkedinengine:
                 try:
                         nbads =site["ads"]
                         cptadded=0
-                        mainlist = self.mainclass.driver.find_elements_by_class_name("result-card")
+                        mainlist = self.mainclass.driver.find_elements_by_class_name("card__job-c")
                         
                         for res in mainlist:
-                                orgurlel = res.find_element_by_css_selector("a")
-                                orgurl = orgurlel.get_attribute("href")
-                                print(orgurl)
-                                orgurlel.click()
-                                self.mainclass.waithuman()
-
-                                adel = self.mainclass.driver.find_element_by_class_name("results__detail-view")
-                                adcontain= adel.get_attribute("innerHTML")                        
+                                
+                                adcontain= res.get_attribute("innerHTML").replace("/job.php","http://neuvoo.fr/job.php")                                                 
                                 adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
                                 doit=True
                                 for exclwd in exclude:
@@ -68,8 +59,7 @@ class Linkedinengine:
                                                         print("==FOUND=={0}".format(inclwd))
                                                         self.report+=self.mainclass.htmlfactory.getfound("==FOUND=={0}".format(inclwd))
                                                         break         
-                                if doit:
-                                        self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)                                
+                                if doit:                                        
                                         self.report+=adcontain
                                         cptadded+=1
                                 print("cptadded={0}, nbads={1}".format(cptadded,nbads))
@@ -87,8 +77,6 @@ class Linkedinengine:
                     return self.report                    
                 except Exception as e:
                         return "{0} {1}".format(e, inspect.stack()[0])
-           
-           
 
 
               

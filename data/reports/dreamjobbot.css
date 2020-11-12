@@ -52,7 +52,10 @@ h3 {
     display: none;
 }
 
-
+#JobViewHeader{
+    visibility: hidden;
+    display: none;
+}
 
 /* polices */
 @font-face {

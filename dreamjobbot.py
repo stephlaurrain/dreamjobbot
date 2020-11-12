@@ -13,6 +13,8 @@ import utils.jsonprms as jsonprms
 from utils.strutils import Strutils
 from engines.poleemploiengine import Poleemploiengine
 from engines.linkedinengine import Linkedinengine
+from engines.neuvooengine import Neuvooengine
+from engines.monsterengine import Monsterengine
 from engines.htmlfactory import Htmlfactory
 import inspect
 from selenium import webdriver
@@ -147,7 +149,14 @@ class Bot:
                                                         if site["ison"]:
                                                                 linkedinengine = Linkedinengine(self)  
                                                                 report+=linkedinengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)
-                                                                
+                                                if name=="neuvoo":
+                                                        if site["ison"]:                                                                
+                                                                neuvooengine = Neuvooengine(self)                                                                                  
+                                                                report+=neuvooengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)                
+                                                if name=="monster":
+                                                        if site["ison"]:                                                                
+                                                                monsterengine = Monsterengine(self)                                                                                  
+                                                                report+=monsterengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)                
                                                 if name=="apec":
                                                         if site["ison"]:
                                                                 pass
@@ -158,9 +167,7 @@ class Bot:
                                                 if name=="adzuna":
                                                         if site["ison"]:
                                                                 pass
-                                                if name=="neuvoo":
-                                                        if site["ison"]:
-                                                                pass
+                                                
                         report+=self.htmlfactory.finalizereport()
                         today = datetime.now()
                         dnow = today.strftime(r"%Y%d%m") 
@@ -181,7 +188,8 @@ class Bot:
                         # args
                         self.removestop() #remove stop file
                         nbargs = len(sys.argv)
-                        command = "doreport" if (nbargs == 1) else sys.argv[1]
+                        #command = "doreport" if (nbargs == 1) else sys.argv[1]
+                        command = "test" if (nbargs == 1) else sys.argv[1]
                         # json parameters from file
                         param = "default" if (nbargs < 3) else sys.argv[2].lower()                        
                         print("params=", command, param)
@@ -204,8 +212,8 @@ class Bot:
                                 input("enter key")
                                 self.driver.close()
                                 self.driver.quit()
-                         
-                       
+                        if (command=="test"):   
+                                print(inspect.stack()[0])
 
                         self.log.lg("=THE END COMPLETE=")
 
