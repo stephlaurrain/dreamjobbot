@@ -25,10 +25,10 @@
       ],
     "sites":
       [
-        {	"name":"poleemploi","url":"https://candidat.pole-emploi.fr/offres/recherche","login":"","password":"","ison":true,"pages":1, "ads":30},
+        {	"name":"poleemploi","url":"https://candidat.pole-emploi.fr/offres/recherche","login":"","password":"","ison":false,"pages":1, "ads":30},
         {	"name":"linkedin","url":"https://www.linkedin.com/jobs/search","login":"","password":"","ison":true,"pages":1, "ads":30},
-        {	"name":"neuvoo","url":"https://neuvoo.fr/emplois","login":"","password":"","ison":true,"pages":5, "ads":20},
-        {	"name":"monster","url":"https://www.monster.fr/emploi/recherche","login":"","password":"","ison":true,"pages":5, "ads":4},
+        {	"name":"neuvoo","url":"https://neuvoo.fr/emplois","login":"","password":"","ison":false,"pages":5, "ads":20},
+        {	"name":"monster","url":"https://www.monster.fr/emploi/recherche","login":"","password":"","ison":false,"pages":5, "ads":4},
         {	"name":"indeed","url":"https://www.indeed.fr","login":"","password":"","ison":false,"pages":5, "ads":4},
         {	"name":"adzuna","url":"https://www.adzuna.fr","login":"","password":"","ison":false,"pages":5, "ads":20},    
         {	"name":"apec","url":"http://apec.fr","login":"","password":"","ison":false,"pages":1, "ads":1  }

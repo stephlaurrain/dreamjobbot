@@ -188,8 +188,8 @@ class Bot:
                         # args
                         self.removestop() #remove stop file
                         nbargs = len(sys.argv)
-                        #command = "doreport" if (nbargs == 1) else sys.argv[1]
-                        command = "test" if (nbargs == 1) else sys.argv[1]
+                        command = "doreport" if (nbargs == 1) else sys.argv[1]
+                        #command = "test" if (nbargs == 1) else sys.argv[1]
                         # json parameters from file
                         param = "default" if (nbargs < 3) else sys.argv[2].lower()                        
                         print("params=", command, param)

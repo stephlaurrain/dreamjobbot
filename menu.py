@@ -60,6 +60,7 @@ while True:
 
     print (drkcol("#####"))
     print (mencol("55","tail","actual default log"))    
+    print (mencol("94","editparams","edit default.json")) 
     print (mencol("95","screen -r","access to screen"))
     print (mencol("96","crontab","edit crontab"))
     print (mencol("97","kill","kill processes"))
@@ -73,6 +74,9 @@ while True:
     if dothat =="55":
         print(drkcol("\ntail -f default\n"))         
         dotail("default")
+    if dothat =="94":
+        print(drkcol("\edit params -r\n"))         
+        os.system ("nano data/default.json")     
     if dothat =="95":
         print(drkcol("\nscreen -r\n"))         
         os.system ("screen -r")   
