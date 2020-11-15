@@ -61,10 +61,10 @@ class Poleemploiengine:
                                 print(orgurl)
                                 sitefromlabel=self.getsitefromlabel(res)
                                 print(self.mainclass.htmlfactory.getsite(sitefromlabel))
-                                self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)
-                                #res.click()
-                                orgurlel.click()
-                                self.mainclass.waithuman()
+                                self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
+                                #orgurlel.click()
+                                orgurlel.send_keys("\n") # solution au not clickable
+                                self.mainclass.waithuman() #voir
                                 wait = WebDriverWait(self.mainclass.driver, 15)
                                 wait.until(EC.invisibility_of_element_located((By.ID, "loader-container")))
                                 adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")

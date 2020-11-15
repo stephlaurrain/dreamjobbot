@@ -83,6 +83,7 @@ class Bot:
                         
                         driver = webdriver.Chrome(executable_path=self.chromedriverbinpath, options=options)
                         driver.implicitly_wait(self.jsprms.prms["implicitlywait"])
+                        
                         return driver
                 except Exception as e:                             
                         self.log.errlg(e)
