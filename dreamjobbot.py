@@ -16,6 +16,7 @@ from engines.linkedinengine import Linkedinengine
 from engines.neuvooengine import Neuvooengine
 from engines.monsterengine import Monsterengine
 from engines.htmlfactory import Htmlfactory
+from engines.selenutils import Selenutils
 import inspect
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -31,6 +32,7 @@ class Bot:
                 self.visitedthissession = list()
                 self.dumbthissession = list()
                 self.htmlfactory = Htmlfactory(self)
+                self.selenutils = Selenutils(self)
                 self.strutils = Strutils()
 
         def trace(self,stck):
@@ -76,8 +78,9 @@ class Bot:
                                 options.add_argument("--no-sandbox")
                                 options.add_argument("--disable-dev-shm-usage")
                                 options.add_argument("--disable-gpu")
-                        prefs = {"profile.managed_default_content_settings.images": 2}
-                        options.add_experimental_option("prefs", prefs)
+                        if self.jsprms.prms["showimages"]:
+                                prefs = {"profile.managed_default_content_settings.images": 2}
+                                options.add_experimental_option("prefs", prefs)
                         options.add_argument("user-agent={0}".format(self.jsprms.prms["useragent"]))            
                         options.add_argument("--start-maximized")
                         
@@ -108,9 +111,9 @@ class Bot:
                 try:                                      
                       
                         for location in place["location"]:
-                                print(location["site"])
+                                #print(location["site"])
                                 if location["site"]==sitename:
-                                        print("###{0}###".format(location))
+                                        #print("###{0}###".format(location))
                                         return location
                 
          
@@ -133,9 +136,9 @@ class Bot:
                         for place in places:                                
                                 #print(place["name"])
                                 for kw in keywords:
-                                        words=kw["words"]
-                                        wordstostr = '+'.join(words)
-                                        report+=self.htmlfactory.gettitle(wordstostr,2)
+                                        #words=kw["words"]
+                                        #wordstostr = '+'.join(words)
+                                        report+=self.htmlfactory.gettitle(kw,2)
                                         for site in sites:
                                                 name=site["name"]
                                                 #print(site["name"])
@@ -145,19 +148,19 @@ class Bot:
                                                 if name=="poleemploi":
                                                         if site["ison"]:                                                                
                                                                 poleemploiengine = Poleemploiengine(self)                                                                                  
-                                                                report+=poleemploiengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)
+                                                                report+=poleemploiengine.getreport(site, distance, location, exclude, doinclude, include, kw)
                                                 if name=="linkedin":
                                                         if site["ison"]:
                                                                 linkedinengine = Linkedinengine(self)  
-                                                                report+=linkedinengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)
+                                                                report+=linkedinengine.getreport(site, distance, location, exclude, doinclude, include, kw)
                                                 if name=="neuvoo":
                                                         if site["ison"]:                                                                
                                                                 neuvooengine = Neuvooengine(self)                                                                                  
-                                                                report+=neuvooengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)                
+                                                                report+=neuvooengine.getreport(site, distance, location, exclude, doinclude, include, kw)                
                                                 if name=="monster":
                                                         if site["ison"]:                                                                
                                                                 monsterengine = Monsterengine(self)                                                                                  
-                                                                report+=monsterengine.getreport(site, distance, location, exclude, doinclude, include, wordstostr)                
+                                                                report+=monsterengine.getreport(site, distance, location, exclude, doinclude, include, kw)                
                                                 if name=="apec":
                                                         if site["ison"]:
                                                                 pass

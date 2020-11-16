@@ -35,39 +35,47 @@ class Neuvooengine:
                         self.mainclass.log.errlg(e)
                         raise
 
+        def treatads(self,res,site,exclude, doinclude, include, nbads):
+                self.mainclass.trace(inspect.stack()[0])          
+                try:
+                        adcontain= res.get_attribute("innerHTML").replace("/job.php","http://neuvoo.fr/job.php")                                                 
+                        adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
+                        doit=True
+                        for exclwd in exclude:
+                                doit = not (exclwd in adcontainstriped)                                                
+                                if not doit: 
+                                        print("FOUND banned word={0}".format(exclwd))
+                                        break
+                        if doinclude and doit:
+                                for inclwd in include:
+                                        doit = inclwd in adcontainstriped                                                
+                                        if doit:
+                                                print("==FOUND=={0}".format(inclwd))
+                                                self.report+=self.mainclass.htmlfactory.getfound("==FOUND=={0}".format(inclwd))
+                                                break         
+                        if doit:                                        
+                                self.report+=adcontain
+
+                except Exception as e:
+                        self.mainclass.log.errlg(e)
+                        self.report+=self.mainclass.htmlfactory.geterror(str(e)) 
+                        raise
+
         def getads(self,site,exclude, doinclude, include):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:
                         nbads =site["ads"]
                         cptadded=0
                         mainlist = self.mainclass.driver.find_elements_by_class_name("card__job-c")
-                        
                         for res in mainlist:
-                                
-                                adcontain= res.get_attribute("innerHTML").replace("/job.php","http://neuvoo.fr/job.php")                                                 
-                                adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
-                                doit=True
-                                for exclwd in exclude:
-                                        doit = not (exclwd in adcontainstriped)                                                
-                                        if not doit: 
-                                                print("FOUND banned word={0}".format(exclwd))
-                                                break
-                                if doinclude and doit:
-                                        for inclwd in include:
-                                                doit = inclwd in adcontainstriped                                                
-                                                if doit:
-                                                        print("==FOUND=={0}".format(inclwd))
-                                                        self.report+=self.mainclass.htmlfactory.getfound("==FOUND=={0}".format(inclwd))
-                                                        break         
-                                if doit:                                        
-                                        self.report+=adcontain
+                                if self.treatads(res,site,exclude, doinclude, include, nbads):
                                         cptadded+=1
-                                print("cptadded={0}, nbads={1}".format(cptadded,nbads))
                                 if cptadded==nbads:break
- #                              self.mainclass.waithuman()
+                                self.mainclass.waithuman(1,1)
                 except Exception as e:
                         self.mainclass.log.errlg(e)
-                        raise
+                        self.report+=self.mainclass.htmlfactory.geterror(e) 
+                        #raise
 
         def getreport(self, site, distance, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         

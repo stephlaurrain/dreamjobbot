@@ -72,6 +72,18 @@ class Htmlfactory(metaclass=Singleton):
                        self.mainclass.log.errlg(e) 
                        raise
 
+        def geterror(self,mess):  
+                self.mainclass.trace(inspect.stack()[0])
+                try:  
+                        res="<div><span class={0}error{0}>ERROR-".format(chr(34))
+                        res+=mess
+                        res+="</span></div>"
+                        return res
+                
+                except Exception as e:
+                       self.mainclass.log.errlg(e) 
+                       raise
+
         def geturltolink(self,url):
                 self.mainclass.trace(inspect.stack()[0])
                 try:  

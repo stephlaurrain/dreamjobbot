@@ -49,6 +49,54 @@ class Poleemploiengine:
                         self.mainclass.log.errlg(e)
                         return "no original site found"
         
+        def treatads(self,res,site,exclude, doinclude, include, nbads):
+                self.mainclass.trace(inspect.stack()[0])          
+                try:                        
+                        orgurlel = res.find_element_by_css_selector("a")
+                        orgurl = orgurlel.get_attribute("href")
+                        print(orgurl)
+                        sitefromlabel=self.getsitefromlabel(res)
+                        print(self.mainclass.htmlfactory.getsite(sitefromlabel))
+                        self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
+                        self.mainclass.waithuman(1,1)        
+                        #orgurlel.click()
+                        self.mainclass.selenutils.doclick(orgurlel)
+                        #action = webdriver.common.action_chains.ActionChains(self.mainclass.driver)
+                        #action.click(on_element=orgurlel)
+                        #self.mainclass.driver.execute_script("arguments[0].click();", orgurlel)
+                        self.mainclass.waithuman(1,1) #voir
+                        adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
+                        #input ("press key : ")
+                        adcontain= adel.get_attribute("innerHTML")                            
+                        adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
+                        doit=True
+                        for exclwd in exclude:
+                                doit = not (exclwd in adcontainstriped)                                                
+                                if not doit: 
+                                        print("FOUND banned word={0}".format(exclwd))
+                                        break
+                        if doinclude and doit:
+                                for inclwd in include:
+                                        doit = inclwd in adcontainstriped                                                
+                                        if doit:
+                                                print("==FOUND=={0}".format(inclwd))
+                                                self.report+=self.mainclass.htmlfactory.getfound("==FOUND=={0}".format(inclwd))
+                                                break                                  
+                        if doit:
+                                self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)                                
+                                self.report+=adcontain
+                                
+                        #print("cptadded={0}, nbads={1}".format(cptadded,nbads))
+                        
+                        btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
+                        btnclose.click()
+                        
+                except Exception as e:
+                        self.mainclass.log.errlg(e)
+                        self.report+=self.mainclass.htmlfactory.geterror(str(e)) 
+                        #raise
+        
+
         def getads(self,site,exclude, doinclude, include):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:
@@ -56,65 +104,14 @@ class Poleemploiengine:
                         cptadded=0
                         mainlist = self.mainclass.driver.find_elements_by_class_name("result")
                         for res in mainlist:
-                                
-                                
-                                orgurlel = res.find_element_by_css_selector("a")
-                                orgurl = orgurlel.get_attribute("href")
-                                print(orgurl)
-                                sitefromlabel=self.getsitefromlabel(res)
-                                print(self.mainclass.htmlfactory.getsite(sitefromlabel))
-                                self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
-                                self.mainclass.waithuman(1,1)        
-                                #wait = WebDriverWait(res, 15)
-                                #wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a")))                                 
-                                orgurlel.click()
-                                #action = webdriver.common.action_chains.ActionChains(self.mainclass.driver)
-                                #action.move_to_element(orgurlel)
-                                #action.click()
-                                #action.perform()
-                                #orgurlel.send_keys("\n") # solution au not clickable
-                                #self.mainclass.driver.execute_script("arguments[0].click();", orgurlel)
-                                self.mainclass.waithuman(1,1) #voir
-                                
-                                #wait = WebDriverWait(self.mainclass.driver, 15)
-                                #wait.until(EC.presence_of_element_located((By.ID, "detailOffreVolet")))                                        
-                                #wait.until(EC.invisibility_of_element_located((By.ID, "loader-container")))
-                                adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
-                                #self.mainclass.waithuman() #voir
-                                #input ("press key : ")
-                                adcontain= adel.get_attribute("innerHTML")                            
-                                adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
-                                doit=True
-                                #print("adcontainstriped={0}".format(adcontainstriped))
-                                #print("exclude={0}".format(exclude))
-                                for exclwd in exclude:
-                                        doit = not (exclwd in adcontainstriped)                                                
-                                        if not doit: 
-                                                print("FOUND banned word={0}".format(exclwd))
-                                                break
-                                #print("doit={0}".format(doit))
-                                #print("include={0}".format(include))
-                                #print("doinclude={0}".format(doinclude))
-                                
-                                if doinclude and doit:
-                                        for inclwd in include:
-                                                doit = inclwd in adcontainstriped                                                
-                                                if doit:
-                                                        print("==FOUND=={0}".format(inclwd))
-                                                        self.report+=self.mainclass.htmlfactory.getfound("==FOUND=={0}".format(inclwd))
-                                                        break                                  
-                                if doit:
-                                        self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)                                
-                                        self.report+=adcontain
+                                if self.treatads(res,site,exclude, doinclude, include, nbads):
                                         cptadded+=1
-                                #print("cptadded={0}, nbads={1}".format(cptadded,nbads))
                                 if cptadded==nbads:break
-                                btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
-                                btnclose.click()
                                 self.mainclass.waithuman(1,1)
                 except Exception as e:
                         self.mainclass.log.errlg(e)
-                        raise
+                        self.report+=self.mainclass.htmlfactory.geterror(e) 
+                        #raise
 
         def getreport(self, site, distance, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
