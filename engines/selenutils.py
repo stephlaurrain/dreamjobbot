@@ -24,12 +24,20 @@ class Selenutils(metaclass=Singleton):
                                 cpt+=1
                                 if cpt ==10:raise
                                 self.mainclass.waithuman(2)
-        
+                                
+        def doclickwithjs(self,el):
+                self.mainclass.trace(inspect.stack()[0])          
+                try:         
+                        self.mainclass.driver.execute_script("arguments[0].click();", el)
+                except Exception as e:                                
+                        print("ClickwithJS Ah ben nan y click pô: {0}".format(e))
+                        
+                        
         def doclick(self,el):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:         
                         el.click()
                 except Exception as e:                                
                         print("Ah ben nan y click pô: {0}".format(e))
-                        self.mainclass.driver.execute_script("arguments[0].click();", el)
+                        self.doclickwithjs(el)
                         self.mainclass.waithuman(2)

@@ -85,7 +85,8 @@ class Poleemploiengine:
                         #print("cptadded={0}, nbads={1}".format(cptadded,nbads))
                         
                         btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
-                        btnclose.click()
+                        self.mainclass.selenutils.doclick(btnclose)
+                        
                         
                 except Exception as e:
                         self.mainclass.log.errlg(e)
@@ -116,10 +117,11 @@ class Poleemploiengine:
                 try:
                     self.dosearch(site, distance, location, words)  
                     self.getads(site,exclude, doinclude, include)              
-                    return self.report                    
+                                       
                 except Exception as e:
-                        return "{0} {1}".format(e, inspect.stack()[0])
-       
+                        mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
+                        self.report+=self.mainclass.htmlfactory.geterror(mess) 
+                return self.report  
 
 
               

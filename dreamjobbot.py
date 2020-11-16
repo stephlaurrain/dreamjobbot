@@ -15,6 +15,7 @@ from engines.poleemploiengine import Poleemploiengine
 from engines.linkedinengine import Linkedinengine
 from engines.neuvooengine import Neuvooengine
 from engines.monsterengine import Monsterengine
+from engines.apecengine import Apecengine
 from engines.htmlfactory import Htmlfactory
 from engines.selenutils import Selenutils
 import inspect
@@ -132,7 +133,7 @@ class Bot:
                         doinclude = self.jsprms.prms["doinclude"]
                         exclude = self.jsprms.prms["exclude"]
                         include = self.jsprms.prms["include"]
-                        
+                        self.apeccookclicked = False
                         for place in places:                                
                                 #print(place["name"])
                                 for kw in keywords:
@@ -163,7 +164,8 @@ class Bot:
                                                                 report+=monsterengine.getreport(site, distance, location, exclude, doinclude, include, kw)                
                                                 if name=="apec":
                                                         if site["ison"]:
-                                                                pass
+                                                                apecengine = Apecengine(self)                                                                                  
+                                                                report+=apecengine.getreport(site, distance, location, exclude, doinclude, include, kw)     
                                                                 
                                                 if name=="indeed":
                                                         if site["ison"]:

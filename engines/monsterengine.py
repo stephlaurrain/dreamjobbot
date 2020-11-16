@@ -96,8 +96,9 @@ class Monsterengine:
                     self.getads(site,exclude, doinclude, include)                                   
                     return self.report                    
                 except Exception as e:
-                        return "{0} {1}".format(e, inspect.stack()[0])
-
+                        mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
+                        self.report+=self.mainclass.htmlfactory.geterror(mess) 
+                return self.report  
 
               
                
