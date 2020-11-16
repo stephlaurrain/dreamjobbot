@@ -58,12 +58,8 @@ class Poleemploiengine:
                         sitefromlabel=self.getsitefromlabel(res)
                         print(self.mainclass.htmlfactory.getsite(sitefromlabel))
                         self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
-                        self.mainclass.waithuman(1,1)        
-                        #orgurlel.click()
+                        self.mainclass.waithuman(1,1)                                
                         self.mainclass.selenutils.doclick(orgurlel)
-                        #action = webdriver.common.action_chains.ActionChains(self.mainclass.driver)
-                        #action.click(on_element=orgurlel)
-                        #self.mainclass.driver.execute_script("arguments[0].click();", orgurlel)
                         self.mainclass.waithuman(1,1) #voir
                         adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
                         #input ("press key : ")
@@ -93,7 +89,8 @@ class Poleemploiengine:
                         
                 except Exception as e:
                         self.mainclass.log.errlg(e)
-                        self.report+=self.mainclass.htmlfactory.geterror(str(e)) 
+                        mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
+                        self.report+=self.mainclass.htmlfactory.geterror(mess) 
                         #raise
         
 
@@ -110,7 +107,8 @@ class Poleemploiengine:
                                 self.mainclass.waithuman(1,1)
                 except Exception as e:
                         self.mainclass.log.errlg(e)
-                        self.report+=self.mainclass.htmlfactory.geterror(e) 
+                        mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
+                        self.report+=self.mainclass.htmlfactory.geterror(mess) 
                         #raise
 
         def getreport(self, site, distance, location, exclude, doinclude, include, words):
