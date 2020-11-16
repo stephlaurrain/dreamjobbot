@@ -56,18 +56,31 @@ class Poleemploiengine:
                         cptadded=0
                         mainlist = self.mainclass.driver.find_elements_by_class_name("result")
                         for res in mainlist:
+                                
+                                
                                 orgurlel = res.find_element_by_css_selector("a")
                                 orgurl = orgurlel.get_attribute("href")
                                 print(orgurl)
                                 sitefromlabel=self.getsitefromlabel(res)
                                 print(self.mainclass.htmlfactory.getsite(sitefromlabel))
                                 self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
-                                #orgurlel.click()
-                                orgurlel.send_keys("\n") # solution au not clickable
-                                self.mainclass.waithuman() #voir
-                                wait = WebDriverWait(self.mainclass.driver, 15)
-                                wait.until(EC.invisibility_of_element_located((By.ID, "loader-container")))
+                                self.mainclass.waithuman(1,1)        
+                                #wait = WebDriverWait(res, 15)
+                                #wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a")))                                 
+                                orgurlel.click()
+                                #action = webdriver.common.action_chains.ActionChains(self.mainclass.driver)
+                                #action.move_to_element(orgurlel)
+                                #action.click()
+                                #action.perform()
+                                #orgurlel.send_keys("\n") # solution au not clickable
+                                #self.mainclass.driver.execute_script("arguments[0].click();", orgurlel)
+                                self.mainclass.waithuman(1,1) #voir
+                                
+                                #wait = WebDriverWait(self.mainclass.driver, 15)
+                                #wait.until(EC.presence_of_element_located((By.ID, "detailOffreVolet")))                                        
+                                #wait.until(EC.invisibility_of_element_located((By.ID, "loader-container")))
                                 adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
+                                #self.mainclass.waithuman() #voir
                                 #input ("press key : ")
                                 adcontain= adel.get_attribute("innerHTML")                            
                                 adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
@@ -94,11 +107,11 @@ class Poleemploiengine:
                                         self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)                                
                                         self.report+=adcontain
                                         cptadded+=1
-                                print("cptadded={0}, nbads={1}".format(cptadded,nbads))
+                                #print("cptadded={0}, nbads={1}".format(cptadded,nbads))
                                 if cptadded==nbads:break
                                 btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
                                 btnclose.click()
-                                self.mainclass.waithuman()
+                                self.mainclass.waithuman(1,1)
                 except Exception as e:
                         self.mainclass.log.errlg(e)
                         raise

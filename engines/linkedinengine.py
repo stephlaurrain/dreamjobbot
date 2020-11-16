@@ -48,10 +48,12 @@ class Linkedinengine:
                         for res in mainlist:
                                 orgurlel = res.find_element_by_css_selector("a")
                                 orgurl = orgurlel.get_attribute("href")
-                                print(orgurl)
+                                
+                                self.mainclass.waithuman() #voir
                                 orgurlel.click()
                                 self.mainclass.waithuman()
-
+                                wait = WebDriverWait(self.mainclass.driver, 15)
+                                wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, "results__detail-view")))
                                 adel = self.mainclass.driver.find_element_by_class_name("results__detail-view")
                                 adcontain= adel.get_attribute("innerHTML")                        
                                 adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")

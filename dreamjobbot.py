@@ -131,14 +131,14 @@ class Bot:
                         include = self.jsprms.prms["include"]
                         
                         for place in places:                                
-                                print(place["name"])
+                                #print(place["name"])
                                 for kw in keywords:
                                         words=kw["words"]
                                         wordstostr = '+'.join(words)
                                         report+=self.htmlfactory.gettitle(wordstostr,2)
                                         for site in sites:
                                                 name=site["name"]
-                                                print(site["name"])
+                                                #print(site["name"])
                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                 location =self.getlocationfromplace(name,place)
                                                 distance=place["distance"]
@@ -210,7 +210,7 @@ class Bot:
                                 
                                 self.doreport(param)
                                 #self.waithuman(1500)
-                                input("enter key")
+                                #input("enter key")
                                 self.driver.close()
                                 self.driver.quit()
                         if (command=="test"):   
