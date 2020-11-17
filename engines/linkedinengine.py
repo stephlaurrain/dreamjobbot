@@ -9,6 +9,7 @@ from time import sleep
 import json
 import logging
 import inspect
+import math
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By 
@@ -25,12 +26,16 @@ class Linkedinengine:
                 self.mainclass=mainclass
                 self.report=""                
 
+
         def dosearch(self, site, distance, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
                         # prms="keywords={0}&location={1}&geoId=&redirect=false&position=1&pageNum=0&f_TP=1,2&distance={2}".format(words, location["geosite"], distance)
                         #attention linkedin : 80km = distance 50, 120km=75 (osef pour le moment)
-                        prms="f_TPR=r604800&geoId={0}&keywords={1}&location={2}".format(location["code"],words,location["geosite"])
+                        #la distance est en miles
+                        dist = distance*1.6
+                        dist = int(math.ceil(dist / 10.0)) * 10
+                        prms="f_TPR=r604800&geoId={0}&keywords={1}&location={2}&distance={3}".format(location["code"],words,location["geosite"],dist)
                         
                         fullurl = "{0}?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)                        

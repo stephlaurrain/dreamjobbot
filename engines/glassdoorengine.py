@@ -17,7 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 
 
-class Apecengine:
+class Glassdoorengine:
       
         def __init__(self, mainclass):                
                 self.visitedthissession = list()
@@ -28,23 +28,36 @@ class Apecengine:
         def dosearch(self, site, distance, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        prms="lieux={0}&distance={1}&motsCles={2}&anciennetePublication=101851&sortsType=DATE".format(location["code"],distance, words )
-                        fullurl = "{0}?{1}".format(site["url"],prms)
+                        # 50 : pas de radius
+                        # 100 : radius=62, 30 : radius=19                        
+                        #dijon-chef-de-projet-informatique-emplois-SRCH_IL.0,5_IC3069836_KO6,33.htm?fromAge=7
+                        #PARIS =SRCH_IL.0,5_IC2881970_KO6,33
+                        prms="{0}-{1}-emplois-SRCH_IL.0,5_IC{2}_KO6,33.htm?fromAge=7".format(site["geosite"],words.replace(" ","-"), format(location["code"]))
+                        radius=""
+                        if site["location"]!=50:
+                                radius="&radius={0}".format(site["location"])
+                        fullurl = "{0}/{1}{2}".format(site["url"],prms,radius)
                         self.mainclass.driver.get(fullurl)
                         
                 except Exception as e:
                         self.mainclass.log.errlg(e)
                         raise
 
+    
         
         def treatads(self,res,site,exclude, doinclude, include, nbads):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        #orgurlel = res.find_element_by_css_selector("a")
-                        orgurl = res.get_attribute("href")
+                        orgurlel = res.find_element_by_css_selector("a")
+                        orgurl = orgurlel.get_attribute("href")
                         print(orgurl)
+                        sitefromlabel=self.getsitefromlabel(res)
+                        print(self.mainclass.htmlfactory.getsite(sitefromlabel))
+                        self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
+                        self.mainclass.waithuman(1,1)                                
+                        self.mainclass.selenutils.doclick(orgurlel)
                         self.mainclass.waithuman(1,1) #voir
-                        adel = res.find_element_by_class_name("card-offer__header")
+                        adel = self.mainclass.driver.find_element_by_id("detailOffreVolet")
                         #input ("press key : ")
                         adcontain= adel.get_attribute("innerHTML")                            
                         adcontainstriped = self.mainclass.strutils.strip_accents(adcontain.lower()).replace(" ","").replace("'","").replace("&#039","")
@@ -64,6 +77,12 @@ class Apecengine:
                         if doit:
                                 self.report+=self.mainclass.htmlfactory.geturltolink(orgurl)                                
                                 self.report+=adcontain
+                                
+                        #print("cptadded={0}, nbads={1}".format(cptadded,nbads))
+                        
+                        btnclose = self.mainclass.driver.find_element_by_css_selector("#PopinDetails > div > div > div > div.modal-header > div > button")
+                        self.mainclass.selenutils.doclick(btnclose)
+                        
                         
                 except Exception as e:
                         self.mainclass.log.errlg(e)
@@ -77,10 +96,7 @@ class Apecengine:
                 try:
                         nbads =site["ads"]
                         cptadded=0
-                        self.mainclass.waithuman(1,1) #voir
-                        maindiv = self.mainclass.driver.find_element_by_class_name("container-result")
-                        print ("maindiv={0}".format(maindiv))
-                        mainlist = maindiv.find_elements_by_css_selector("a[queryparamshandling='merge']")
+                        mainlist = self.mainclass.driver.find_elements_by_class_name("result")
                         for res in mainlist:
                                 if self.treatads(res,site,exclude, doinclude, include, nbads):
                                         cptadded+=1
@@ -95,18 +111,13 @@ class Apecengine:
         def getreport(self, site, distance, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                        self.dosearch(site, distance, location, words)                          
-                        if not self.mainclass.apeccookclicked:
-                                cookbutel = self.mainclass.driver.find_element_by_class_name("optanon-allow-all")
-                                self.mainclass.selenutils.doclick(cookbutel)
-                        self.mainclass.apeccookclicked = True
-                        self.getads(site,exclude, doinclude, include)              
-                
+                    self.dosearch(site, distance, location, words)  
+                    self.getads(site,exclude, doinclude, include)              
+                                       
                 except Exception as e:
                         mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
                         self.report+=self.mainclass.htmlfactory.geterror(mess) 
                 return self.report  
-       
 
 
               
