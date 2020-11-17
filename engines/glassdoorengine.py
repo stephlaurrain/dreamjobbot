@@ -25,17 +25,17 @@ class Glassdoorengine:
                 self.mainclass=mainclass                
                 self.report=""                
 
-        def dosearch(self, site, distance, location, words):
+        def dosearch(self, site, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
                         # 50 : pas de radius
                         # 100 : radius=62, 30 : radius=19                        
                         #dijon-chef-de-projet-informatique-emplois-SRCH_IL.0,5_IC3069836_KO6,33.htm?fromAge=7
                         #PARIS =SRCH_IL.0,5_IC2881970_KO6,33
-                        prms="{0}-{1}-emplois-SRCH_IL.0,5_IC{2}_KO6,33.htm?fromAge=7".format(site["geosite"],words.replace(" ","-"), format(location["code"]))
+                        prms="{0}-{1}-emplois-SRCH_IL.0,5_IC{2}_KO6,33.htm?fromAge=7".format(location["geosite"],words.replace(" ","-"), format(location["code"]))
                         radius=""
-                        if site["location"]!=50:
-                                radius="&radius={0}".format(site["location"])
+                        if location["distance"]!=50:
+                                radius="&radius={0}".format(location["distance"])
                         fullurl = "{0}/{1}{2}".format(site["url"],prms,radius)
                         self.mainclass.driver.get(fullurl)
                         
@@ -50,10 +50,7 @@ class Glassdoorengine:
                 try:                        
                         orgurlel = res.find_element_by_css_selector("a")
                         orgurl = orgurlel.get_attribute("href")
-                        print(orgurl)
-                        sitefromlabel=self.getsitefromlabel(res)
-                        print(self.mainclass.htmlfactory.getsite(sitefromlabel))
-                        self.report+=self.mainclass.htmlfactory.getsite(sitefromlabel)                                
+                        print(orgurl)                        
                         self.mainclass.waithuman(1,1)                                
                         self.mainclass.selenutils.doclick(orgurlel)
                         self.mainclass.waithuman(1,1) #voir
@@ -96,22 +93,22 @@ class Glassdoorengine:
                 try:
                         nbads =site["ads"]
                         cptadded=0
-                        mainlist = self.mainclass.driver.find_elements_by_class_name("result")
-                        for res in mainlist:
+                        mainlist = self.mainclass.driver.find_elements_by_css_selector("li[class='jl']")
+                        """for res in mainlist:
                                 if self.treatads(res,site,exclude, doinclude, include, nbads):
                                         cptadded+=1
                                 if cptadded==nbads:break
-                                self.mainclass.waithuman(1,1)
+                                self.mainclass.waithuman(1,1)"""
                 except Exception as e:
                         self.mainclass.log.errlg(e)
                         mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
                         self.report+=self.mainclass.htmlfactory.geterror(mess) 
                         #raise
 
-        def getreport(self, site, distance, location, exclude, doinclude, include, words):
+        def getreport(self, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                    self.dosearch(site, distance, location, words)  
+                    self.dosearch(site, location, words)  
                     self.getads(site,exclude, doinclude, include)              
                                        
                 except Exception as e:

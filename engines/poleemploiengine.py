@@ -25,12 +25,12 @@ class Poleemploiengine:
                 self.mainclass=mainclass                
                 self.report=""                
 
-        def dosearch(self, site, distance, location, words):
+        def dosearch(self, site, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
                         #rnge="0-{0}".format(site["ads"]-1)
                         rnge="0-29"
-                        prms="lieux={0}&motsCles={1}&offresPartenaires=true&range={2}&rayon={3}&tri=1".format(location["code"], words,rnge,distance )
+                        prms="lieux={0}&motsCles={1}&offresPartenaires=true&range={2}&rayon={3}&tri=1".format(location["code"], words,rnge,location["distance"] )
                         fullurl = "{0}?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)
                         
@@ -112,10 +112,10 @@ class Poleemploiengine:
                         self.report+=self.mainclass.htmlfactory.geterror(mess) 
                         #raise
 
-        def getreport(self, site, distance, location, exclude, doinclude, include, words):
+        def getreport(self, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                    self.dosearch(site, distance, location, words)  
+                    self.dosearch(site, location, words)  
                     self.getads(site,exclude, doinclude, include)              
                                        
                 except Exception as e:

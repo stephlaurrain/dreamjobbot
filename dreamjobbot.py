@@ -144,34 +144,34 @@ class Bot:
                                         for site in sites:
                                                 name=site["name"]
                                                 #print(site["name"])
-                                                
+                                                print(self.getlocationfromplace(name,place))                                                
                                                 location =self.getlocationfromplace(name,place)
-                                                distance=site["distance"]
+                                                
                                                 if name=="poleemploi":
                                                         if site["ison"]:                                                                
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 poleemploiengine = Poleemploiengine(self)                                                                                  
-                                                                report+=poleemploiengine.getreport(site, distance, location, exclude, doinclude, include, kw)
+                                                                report+=poleemploiengine.getreport(site, location, exclude, doinclude, include, kw)
                                                 if name=="linkedin":
                                                         if site["ison"]:
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 linkedinengine = Linkedinengine(self)  
-                                                                report+=linkedinengine.getreport(site, distance, location, exclude, doinclude, include, kw)
+                                                                report+=linkedinengine.getreport(site, location, exclude, doinclude, include, kw)
                                                 if name=="neuvoo":
                                                         if site["ison"]:
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)                                                                
                                                                 neuvooengine = Neuvooengine(self)                                                                                  
-                                                                report+=neuvooengine.getreport(site, distance, location, exclude, doinclude, include, kw)                
+                                                                report+=neuvooengine.getreport(site, location, exclude, doinclude, include, kw)                
                                                 if name=="monster":
                                                         if site["ison"]:                                         
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)                       
                                                                 monsterengine = Monsterengine(self)                                                                                  
-                                                                report+=monsterengine.getreport(site, distance, location, exclude, doinclude, include, kw)                
+                                                                report+=monsterengine.getreport(site, location, exclude, doinclude, include, kw)                
                                                 if name=="apec":
                                                         if site["ison"]:
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 apecengine = Apecengine(self)                                                                                  
-                                                                report+=apecengine.getreport(site, distance, location, exclude, doinclude, include, kw)     
+                                                                report+=apecengine.getreport(site, location, exclude, doinclude, include, kw)     
                                                                 
                                                 if name=="indeed":
                                                         if site["ison"]:
@@ -183,7 +183,7 @@ class Bot:
                                                         if site["ison"]:
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 glassdoorengine = Glassdoorengine(self)                                                                                  
-                                                                report+=glassdoorengine.getreport(site, distance, location, exclude, doinclude, include, kw)     
+                                                                report+=glassdoorengine.getreport(site, location, exclude, doinclude, include, kw)     
                                                                 
                                                 
                         report+=self.htmlfactory.finalizereport()

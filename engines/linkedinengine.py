@@ -27,13 +27,13 @@ class Linkedinengine:
                 self.report=""                
 
 
-        def dosearch(self, site, distance, location, words):
+        def dosearch(self, site, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
                         # prms="keywords={0}&location={1}&geoId=&redirect=false&position=1&pageNum=0&f_TP=1,2&distance={2}".format(words, location["geosite"], distance)
                         #attention linkedin : 80km = distance 50, 120km=75 (osef pour le moment)
                         #la distance est en miles
-                        dist = distance*1.6
+                        dist = location["distance"]*1.6
                         dist = int(math.ceil(dist / 10.0)) * 10
                         prms="f_TPR=r604800&geoId={0}&keywords={1}&location={2}&distance={3}".format(location["code"],words,location["geosite"],dist)
                         
@@ -108,10 +108,10 @@ class Linkedinengine:
                         self.mainclass.log.errlg(e)                        
                         raise
 
-        def getreport(self, site, distance, location, exclude, doinclude, include, words):
+        def getreport(self, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                    self.dosearch(site, distance, location, words)                      
+                    self.dosearch(site,location, words)                      
                     self.getads(site,exclude, doinclude, include)                                   
                     return self.report                    
                 except Exception as e:

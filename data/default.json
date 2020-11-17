@@ -22,7 +22,7 @@
                 {"site":"indeed", "code":21231, "geosite":"dijon","distance":50},
                 {"site":"adzuna","code":119422, "geosite":"Dijon","distance":50},
                 {"site":"apec","code":567463, "geosite":"Dijon","distance":50},
-                {"site":"glassdoor","code":567463, "geosite":"Dijon","distance":50}
+                {"site":"glassdoor","code":3069836, "geosite":"dijon","distance":50}
                 
               ]    
       }
@@ -35,7 +35,7 @@
       {	"name":"monster","url":"https://www.monster.fr/emploi/recherche","ison":false,"pages":5, "ads":4},
       {	"name":"indeed","url":"https://www.indeed.fr","ison":false,"pages":5, "ads":4},
       {	"name":"adzuna","url":"https://www.adzuna.fr","ison":false,"pages":5, "ads":20},    
-      {	"name":"apec","url":"https://www.apec.fr/candidat/recherche-emploi.html/emploi","ison":true,"pages":1, "ads":1  },
+      {	"name":"apec","url":"https://www.apec.fr/candidat/recherche-emploi.html/emploi","ison":false,"pages":1, "ads":1  },
       {	"name":"glassdoor","url":"https://www.glassdoor.fr/Emploi","ison":true,"pages":1, "ads":1  }
       
       

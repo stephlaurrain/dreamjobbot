@@ -25,10 +25,10 @@ class Apecengine:
                 self.mainclass=mainclass                
                 self.report=""                
 
-        def dosearch(self, site, distance, location, words):
+        def dosearch(self, site, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        prms="lieux={0}&distance={1}&motsCles={2}&anciennetePublication=101851&sortsType=DATE".format(location["code"],distance, words )
+                        prms="lieux={0}&distance={1}&motsCles={2}&anciennetePublication=101851&sortsType=DATE".format(location["code"],location["distance"], words )
                         fullurl = "{0}?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)
                         
@@ -92,10 +92,10 @@ class Apecengine:
                         self.report+=self.mainclass.htmlfactory.geterror(mess) 
                         #raise
 
-        def getreport(self, site, distance, location, exclude, doinclude, include, words):
+        def getreport(self, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                        self.dosearch(site, distance, location, words)                          
+                        self.dosearch(site, location, words)                          
                         if not self.mainclass.apeccookclicked:
                                 cookbutel = self.mainclass.driver.find_element_by_class_name("optanon-allow-all")
                                 self.mainclass.selenutils.doclick(cookbutel)

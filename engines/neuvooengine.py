@@ -25,10 +25,10 @@ class Neuvooengine:
                 self.mainclass=mainclass
                 self.report=""                
 
-        def dosearch(self, site, distance, location, words):
+        def dosearch(self, site, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        prms="k={0}&l={1}&p=1&date=7d&field=&company=&source_type=&radius={2}&from=&test=&iam=&is_category=no".format(words, location["geosite"], distance)                                                
+                        prms="k={0}&l={1}&p=1&date=7d&field=&company=&source_type=&radius={2}&from=&test=&iam=&is_category=no".format(words, location["geosite"], location["distance"])                                                
                         fullurl = "{0}/?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)                        
                 except Exception as e:
@@ -77,10 +77,10 @@ class Neuvooengine:
                         self.report+=self.mainclass.htmlfactory.geterror(e) 
                         #raise
 
-        def getreport(self, site, distance, location, exclude, doinclude, include, words):
+        def getreport(self, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                    self.dosearch(site, distance, location, words)                      
+                    self.dosearch(site, location, words)                      
                     self.getads(site,exclude, doinclude, include)                                   
                                   
                 except Exception as e:
