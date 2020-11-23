@@ -132,9 +132,11 @@ class Bot:
                         keywords = self.jsprms.prms["keywords"]
                         sites = self.jsprms.prms["sites"]
                         doinclude = self.jsprms.prms["doinclude"]
+                        reportmode=self.jsprms.prms["reportmode"]
                         exclude = self.jsprms.prms["exclude"]
                         include = self.jsprms.prms["include"]
                         self.apeccookclicked = False
+                        self.glassdoorcookclicked = False
                         for place in places:                                
                                 #print(place["name"])
                                 for kw in keywords:
@@ -143,47 +145,52 @@ class Bot:
                                         report+=self.htmlfactory.gettitle(kw,2)
                                         for site in sites:
                                                 name=site["name"]
-                                                #print(site["name"])
-                                                print(self.getlocationfromplace(name,place))                                                
-                                                location =self.getlocationfromplace(name,place)
-                                                
+                                                #print(site["name"])                                                
                                                 if name=="poleemploi":
                                                         if site["ison"]:                                                                
+                                                                location =self.getlocationfromplace(name,place)
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 poleemploiengine = Poleemploiengine(self)                                                                                  
-                                                                report+=poleemploiengine.getreport(site, location, exclude, doinclude, include, kw)
+                                                                report+=poleemploiengine.getreport(reportmode,site, location, exclude, doinclude, include, kw)
                                                 if name=="linkedin":
                                                         if site["ison"]:
+                                                                location =self.getlocationfromplace(name,place)
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 linkedinengine = Linkedinengine(self)  
-                                                                report+=linkedinengine.getreport(site, location, exclude, doinclude, include, kw)
+                                                                report+=linkedinengine.getreport(reportmode,site, location, exclude, doinclude, include, kw)
                                                 if name=="neuvoo":
                                                         if site["ison"]:
+                                                                location =self.getlocationfromplace(name,place)
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)                                                                
                                                                 neuvooengine = Neuvooengine(self)                                                                                  
-                                                                report+=neuvooengine.getreport(site, location, exclude, doinclude, include, kw)                
+                                                                report+=neuvooengine.getreport(reportmode,site, location, exclude, doinclude, include, kw)                
                                                 if name=="monster":
-                                                        if site["ison"]:                                         
+                                                        if site["ison"]:                                       
+                                                                location =self.getlocationfromplace(name,place)  
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)                       
                                                                 monsterengine = Monsterengine(self)                                                                                  
-                                                                report+=monsterengine.getreport(site, location, exclude, doinclude, include, kw)                
+                                                                report+=monsterengine.getreport(reportmode,site, location, exclude, doinclude, include, kw)                
                                                 if name=="apec":
                                                         if site["ison"]:
+                                                                location =self.getlocationfromplace(name,place)
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 apecengine = Apecengine(self)                                                                                  
-                                                                report+=apecengine.getreport(site, location, exclude, doinclude, include, kw)     
+                                                                report+=apecengine.getreport(reportmode, site, location, exclude, doinclude, include, kw)     
                                                                 
                                                 if name=="indeed":
                                                         if site["ison"]:
-                                                                pass
+                                                                location =self.getlocationfromplace(name,place)
+                                                                report+=self.htmlfactory.gettitle(site["name"],1)
                                                 if name=="adzuna":
                                                         if site["ison"]:
-                                                                pass
+                                                                location =self.getlocationfromplace(name,place)
+                                                                report+=self.htmlfactory.gettitle(site["name"],1)
                                                 if name=="glassdoor":
                                                         if site["ison"]:
+                                                                location =self.getlocationfromplace(name,place)
                                                                 report+=self.htmlfactory.gettitle(site["name"],1)
                                                                 glassdoorengine = Glassdoorengine(self)                                                                                  
-                                                                report+=glassdoorengine.getreport(site, location, exclude, doinclude, include, kw)     
+                                                                report+=glassdoorengine.getreport(reportmode,site, location, exclude, doinclude, include, kw)     
                                                                 
                                                 
                         report+=self.htmlfactory.finalizereport()

@@ -108,12 +108,14 @@ class Linkedinengine:
                         self.mainclass.log.errlg(e)                        
                         raise
 
-        def getreport(self, site, location, exclude, doinclude, include, words):
+        def getreport(self,reportmode,  site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                    self.dosearch(site,location, words)                      
-                    self.getads(site,exclude, doinclude, include)                                   
-                    return self.report                    
+                        self.dosearch(site,location, words)                      
+                        if reportmode: 
+                                self.getads(site,exclude, doinclude, include)
+                        else: input("Waiting for key:\n")                                       
+                        
                 except Exception as e:
                         mess ="{1!s}{0!s} \n {2!s}".format(e, inspect.stack()[0],inspect.stack())
                         self.report+=self.mainclass.htmlfactory.geterror(mess) 

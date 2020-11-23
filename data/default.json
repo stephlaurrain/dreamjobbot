@@ -9,9 +9,10 @@
   "doinclude":false,
   "timeout": 30000,
   "showimages":false,
+  "reportmode":false,
   "headless":false,
   "raspberry":false,
-  "useragent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36",
+  "useragent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.44240.198 Safari/537.36",
   "places" : 
     [
       {	"name":"Dijon", "location":[                
@@ -31,17 +32,22 @@
     [
       {	"name":"poleemploi","url":"https://candidat.pole-emploi.fr/offres/recherche","ison":false,"pages":1, "ads":30},
       {	"name":"linkedin","url":"https://www.linkedin.com/jobs/search","ison":false,"pages":1, "ads":30},
-      {	"name":"neuvoo","url":"https://neuvoo.fr/emplois","ison":false,"pages":5, "ads":20},
-      {	"name":"monster","url":"https://www.monster.fr/emploi/recherche","ison":false,"pages":5, "ads":4},
+      {	"name":"neuvoo","url":"https://neuvoo.fr/emplois","ison":true,"pages":5, "ads":20},
+      {	"name":"monster","url":"https://www.monster.fr/emploi/recherche","ison":true,"pages":5, "ads":4},
       {	"name":"indeed","url":"https://www.indeed.fr","ison":false,"pages":5, "ads":4},
       {	"name":"adzuna","url":"https://www.adzuna.fr","ison":false,"pages":5, "ads":20},    
       {	"name":"apec","url":"https://www.apec.fr/candidat/recherche-emploi.html/emploi","ison":false,"pages":1, "ads":1  },
-      {	"name":"glassdoor","url":"https://www.glassdoor.fr/Emploi","ison":true,"pages":1, "ads":1  }
+      {	"name":"glassdoor","url":"https://www.glassdoor.fr/Emploi","ison":false,"pages":1, "ads":1  }
       
       
       
     ],
   "keywords":
+    [          
+          "chef projet informatique"
+
+    ],      
+    "keywordsorg":
     [          
           "chef projet informatique",
           "responsable informatique",
@@ -49,7 +55,7 @@
           "formateur",
           "professeur"
 
-    ],          
+    ],     
   "include":
     [
       "developpementinformatique",
@@ -72,15 +78,16 @@
     ],      
   "exclude":
     [
-      "alteca",
-      "gfi",
+      "alteca",      
       "cpage",
       "bancaire",
       "cobol",
       "steria",        
       "ymag",
       "windev",
-      "atolconseil"
+      "atolconseil",
+      "arecrutepourceposte",
+      "groupegfi"
     ]      
 }
   
