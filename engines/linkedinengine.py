@@ -35,7 +35,7 @@ class Linkedinengine:
                         #la distance est en miles
                         dist = location["distance"]*1.6
                         dist = int(math.ceil(dist / 10.0)) * 10
-                        prms="f_TPR=r604800&geoId={0}&keywords={1}&location={2}&distance={3}".format(location["code"],words,location["geosite"],dist)
+                        prms="f_TPR=r604800&geoId={0}&keywords={1}&location={2}&distance={3}&f_TP=1%2C2&redirect=false&position=1&pageNum=0".format(location["code"],words,location["geosite"],dist)
                         
                         fullurl = "{0}?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)                        
@@ -111,7 +111,16 @@ class Linkedinengine:
         def getreport(self,reportmode,  site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                        self.dosearch(site,location, words)                      
+                        self.dosearch(site,location, words)   
+                        if not self.mainclass.linkedincookclicked:
+                                try:                                        
+                                        #cssprout= "#artdeco-global-alert-container > div.artdeco-global-alert.artdeco-global-alert--NOTICE.artdeco-global-alert--COOKIE_CONSENT > section > div > div.artdeco-global-alert-action__wrapper > button:nth-child(2)"
+                                        cookbutel = self.mainclass.driver.find_element_by_xpath('//div[@id="artdeco-global-alert-container"]/div[1]/section/div/div[2]/button[2]')
+                                        self.mainclass.selenutils.doclick(cookbutel)
+                                except Exception as e:
+                                        print(e)
+                                        #pass
+                                           
                         if reportmode: 
                                 self.getads(site,exclude, doinclude, include)
                         else: input("Waiting for key:\n")                                       

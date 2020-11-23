@@ -30,24 +30,24 @@
     ],
   "sites":
     [
-      {	"name":"poleemploi","url":"https://candidat.pole-emploi.fr/offres/recherche","ison":false,"pages":1, "ads":30},
-      {	"name":"linkedin","url":"https://www.linkedin.com/jobs/search","ison":false,"pages":1, "ads":30},
+      {	"name":"poleemploi","url":"https://candidat.pole-emploi.fr/offres/recherche","ison":true,"pages":1, "ads":30},
+      {	"name":"linkedin","url":"https://www.linkedin.com/jobs/search","ison":true,"pages":1, "ads":30},
       {	"name":"neuvoo","url":"https://neuvoo.fr/emplois","ison":true,"pages":5, "ads":20},
       {	"name":"monster","url":"https://www.monster.fr/emploi/recherche","ison":true,"pages":5, "ads":4},
-      {	"name":"indeed","url":"https://www.indeed.fr","ison":false,"pages":5, "ads":4},
-      {	"name":"adzuna","url":"https://www.adzuna.fr","ison":false,"pages":5, "ads":20},    
-      {	"name":"apec","url":"https://www.apec.fr/candidat/recherche-emploi.html/emploi","ison":false,"pages":1, "ads":1  },
-      {	"name":"glassdoor","url":"https://www.glassdoor.fr/Emploi","ison":false,"pages":1, "ads":1  }
+      {	"name":"indeed","url":"https://www.indeed.fr","ison":true,"pages":5, "ads":4},
+      {	"name":"adzuna","url":"https://www.adzuna.fr","ison":true,"pages":5, "ads":20},    
+      {	"name":"apec","url":"https://www.apec.fr/candidat/recherche-emploi.html/emploi","ison":true,"pages":1, "ads":1  },
+      {	"name":"glassdoor","url":"https://www.glassdoor.fr/Emploi","ison":true,"pages":1, "ads":1  }
       
       
       
     ],
-  "keywords":
+  "keywordstest":
     [          
           "chef projet informatique"
 
     ],      
-    "keywordsorg":
+    "keywords":
     [          
           "chef projet informatique",
           "responsable informatique",

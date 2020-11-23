@@ -137,6 +137,7 @@ class Bot:
                         include = self.jsprms.prms["include"]
                         self.apeccookclicked = False
                         self.glassdoorcookclicked = False
+                        self.linkedincookclicked = False
                         for place in places:                                
                                 #print(place["name"])
                                 for kw in keywords:

@@ -28,7 +28,7 @@ class Monsterengine:
         def dosearch(self, site, location, words):
                 self.mainclass.trace(inspect.stack()[0])          
                 try:                        
-                        prms="q={0}&where={1}&cy=fr&rad={2}".format(words, location["geosite"], location["distance"])                                                
+                        prms="q={0}&where={1}&tm=7&cy=fr&rad={2}".format(words, location["geosite"], location["distance"])                                                
 
                         fullurl = "{0}/?{1}".format(site["url"],prms)
                         self.mainclass.driver.get(fullurl)                        

@@ -115,14 +115,14 @@ class Glassdoorengine:
         def getreport(self, reportmode, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                
+                        self.dosearch(site, location, words)  
                         if not self.mainclass.glassdoorcookclicked:
                                 try:
                                         cookbutel = self.mainclass.driver.find_element_by_id("onetrust-accept-btn-handler")
                                         self.mainclass.selenutils.doclick(cookbutel)
                                 except:
                                         pass
-                        self.dosearch(site, location, words)  
+                        
                         #input("prout")
                         if reportmode:
                                 self.getads(site,exclude, doinclude, include)       
