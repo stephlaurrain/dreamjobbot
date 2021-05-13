@@ -26,7 +26,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait 
 from selenium.webdriver.support import expected_conditions as EC 
 from selenium.common.exceptions import NoSuchElementException
-
+from structs.cookieclicked import Cookieclicked
 
 class Bot:
       
@@ -36,6 +36,7 @@ class Bot:
                 self.htmlfactory = Htmlfactory(self)
                 self.selenutils = Selenutils(self)
                 self.strutils = Strutils()
+                self.cookieclicked = Cookieclicked();
 
         def trace(self,stck):
                 #print ("{0} ({1}-{2})".format(stck.function, stck.filename, stck.lineno))
@@ -135,9 +136,7 @@ class Bot:
                         reportmode=self.jsprms.prms["reportmode"]
                         exclude = self.jsprms.prms["exclude"]
                         include = self.jsprms.prms["include"]
-                        self.apeccookclicked = False
-                        self.glassdoorcookclicked = False
-                        self.linkedincookclicked = False
+                      
                         for place in places:                                
                                 #print(place["name"])
                                 for kw in keywords:

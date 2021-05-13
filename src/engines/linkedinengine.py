@@ -108,19 +108,20 @@ class Linkedinengine:
                         self.mainclass.log.errlg(e)                        
                         raise
 
+        def clickcookie(self):
+                try:      
+                        if not self.mainclass.cookieclicked.linkedin:                                                          
+                                cookbutel = self.mainclass.driver.find_element_by_xpath('//div[@id="artdeco-global-alert-container"]/div[1]/section/div/div[2]/button[2]')
+                                self.mainclass.selenutils.doclick(cookbutel)
+                        self.mainclass.cookieclicked.linkedin = True
+                except Exception as e:
+                        print(e)
+
         def getreport(self,reportmode,  site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                        self.dosearch(site,location, words)   
-                        if not self.mainclass.linkedincookclicked:
-                                try:                                        
-                                        #cssprout= "#artdeco-global-alert-container > div.artdeco-global-alert.artdeco-global-alert--NOTICE.artdeco-global-alert--COOKIE_CONSENT > section > div > div.artdeco-global-alert-action__wrapper > button:nth-child(2)"
-                                        cookbutel = self.mainclass.driver.find_element_by_xpath('//div[@id="artdeco-global-alert-container"]/div[1]/section/div/div[2]/button[2]')
-                                        self.mainclass.selenutils.doclick(cookbutel)
-                                except Exception as e:
-                                        print(e)
-                                        #pass
-                                           
+                        self.dosearch(site,location, words) 
+                        self.clickcookie()
                         if reportmode: 
                                 self.getads(site,exclude, doinclude, include)
                         else: input("Waiting for key:\n")                                       

@@ -89,10 +89,21 @@ class Monsterengine:
                         self.mainclass.log.errlg(e)
                         self.report+=self.mainclass.htmlfactory.geterror(e) 
 
+
+        def clickcookie(self):
+                try:    
+                        if not self.mainclass.cookieclicked.monster:                                                            
+                                cookbutel = self.mainclass.driver.find_element_by_id("onetrust-accept-btn-handler")                        
+                                self.mainclass.selenutils.doclick(cookbutel)
+                        self.mainclass.cookieclicked.monster = True
+                except Exception as e:
+                        print(e)
+
         def getreport(self, reportmode, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
-                        self.dosearch(site, location, words)                      
+                        self.dosearch(site, location, words)    
+                        self.clickcookie()                  
                         if reportmode: 
                                 self.getads(site,exclude, doinclude, include)                                   
                         else: input("Waiting for key:\n")    

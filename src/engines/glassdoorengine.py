@@ -112,16 +112,22 @@ class Glassdoorengine:
                         self.report+=self.mainclass.htmlfactory.geterror(mess) 
                         #raise
 
+        def clickcookie(self):
+                try:      
+                        #print ("cookieclicked={0}".format(self.mainclass.cookieclicked.glassdoor))
+                        if not self.mainclass.cookieclicked.glassdoor: 
+                                cookbutel = self.mainclass.driver.find_element_by_id("onetrust-accept-btn-handler")
+                                #print ("cookbutel={0}".format(cookbutel))
+                                self.mainclass.selenutils.doclick(cookbutel)
+                        self.mainclass.cookieclicked.glassdoor = True
+                except Exception as e:
+                        print(e)
+
         def getreport(self, reportmode, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
                         self.dosearch(site, location, words)  
-                        if not self.mainclass.glassdoorcookclicked:
-                                try:
-                                        cookbutel = self.mainclass.driver.find_element_by_id("onetrust-accept-btn-handler")
-                                        self.mainclass.selenutils.doclick(cookbutel)
-                                except:
-                                        pass
+                        self.clickcookie()
                         
                         #input("prout")
                         if reportmode:

@@ -76,11 +76,21 @@ class Neuvooengine:
                         self.mainclass.log.errlg(e)
                         self.report+=self.mainclass.htmlfactory.geterror(e) 
                         #raise
+        
+        def clickcookie(self):
+                try:      
+                        #if not self.mainclass.cookieclicked.neuvoo:                                                          
+                                #cookbutel = self.mainclass.driver.find_element_by_xpath('//div[@id="artdeco-global-alert-container"]/div[1]/section/div/div[2]/button[2]')
+                                #self.mainclass.selenutils.doclick(cookbutel)
+                        self.mainclass.cookieclicked.neuvoo = True
+                except Exception as e:
+                        print(e)
 
         def getreport(self, reportmode, site, location, exclude, doinclude, include, words):
                 self.mainclass.trace(inspect.stack()[0])         
                 try:
                         self.dosearch(site, location, words)      
+                        # self.clickcookie() Implementer si besoin
                         if reportmode:                
                                 self.getads(site,exclude, doinclude, include)  
                         else: input("Waiting for key:\n")                                     
