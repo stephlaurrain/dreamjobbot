@@ -65,10 +65,10 @@ h3 {
 /* polices */
 @font-face {
     font-family: larseit;  
-    src: url(./fonts/LarsseitLight.otf) format('truetype');
+    src: url(../fonts/LarsseitLight.otf) format('truetype');
 }
 
 @font-face {
     font-family: vidaloka;  
-    src: url(./fonts/Vidaloka-Regular.otf) format('truetype');
+    src: url(../fonts/Vidaloka-Regular.otf) format('truetype');
 }

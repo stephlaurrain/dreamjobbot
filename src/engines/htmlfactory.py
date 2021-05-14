@@ -17,8 +17,8 @@ class Htmlfactory(metaclass=Singleton):
                 try:  
                         head="<html>"
                         head+="\n<head>"
-                        head+="<link href={0}bootstrap.min.css{0} rel={0}stylesheet{0}>".format(chr(34))
-                        head+="<link href={0}dreamjobbot.css{0}rel={0}stylesheet{0}>".format(chr(34))
+                        head+="<link href=/{0}./css/bootstrap.min.css{0} rel={0}stylesheet{0}>".format(chr(34))
+                        head+="<link href={0}./css/dreamjobbot.css{0}rel={0}stylesheet{0}>".format(chr(34))
                         head+="\n</head>"
                         head+="\n<body class={0}main{0}>".format(chr(34))
                         return head

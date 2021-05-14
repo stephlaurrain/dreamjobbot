@@ -10,6 +10,7 @@ import json
 import logging
 import utils.mylog as mylog
 import utils.jsonprms as jsonprms
+import utils.fileutils as fileutils
 from utils.strutils import Strutils
 from engines.poleemploiengine import Poleemploiengine
 from engines.linkedinengine import Linkedinengine
@@ -228,6 +229,9 @@ class Bot:
                         self.chromedriverbinpath ="{0}{1}assets{1}chromedriver{1}chromedriver".format(self.rootApp,os.path.sep)
                         self.test = self.jsprms.prms["test"]
                         self.log.lg("=dreamjobbot V1.1346, let's crawl=")
+                        self.log.lg("=>clean files older than {0} days".format(self.jsprms.prms["keeplogdays"]))
+                        fileutils.remove_old_files("{0}{1}log".format(self.rootApp,os.path.sep),self.jsprms.prms["keeplogdays"])    
+                        fileutils.remove_old_files("{0}{1}data/reports".format(self.rootApp,os.path.sep),self.jsprms.prms["keeplogdays"], "html")    
                         self.driver = self.init()                        
                         print(command)                                                       
                         if (command=="doreport"):                             
